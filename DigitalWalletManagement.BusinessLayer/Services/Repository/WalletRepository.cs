@@ -87,10 +87,14 @@ namespace DigitalWalletManagement.BusinessLayer.Services.Repository
                 var existingWallet = await _dbContext.Wallets
                                                      .FirstOrDefaultAsync(w => w.WalletId == wallet.WalletId);
 
-                _dbContext.Wallets.Update(existingWallet);  
+                existingWallet.UserId = wallet.UserId;
+                existingWallet.WalletId = wallet.WalletId;
+                existingWallet.Balance = wallet.Balance;
+                existingWallet.Name = wallet.Name;
+                existingWallet.CreatedAt = wallet.CreatedAt;
                 await _dbContext.SaveChangesAsync(); 
 
-                return existingWallet; 
+                return wallet; 
             }
             catch (Exception ex)
             {
